@@ -1,11 +1,33 @@
 <script>
   import TransactionForm from "./TransactionForm.svelte";
+
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
+  const handleView = (viewSelection) => {
+    dispatch("handleViewSelect", viewSelection);
+  };
+
+  export let view;
 </script>
 
 <div class="d-flex flex-column mt-3 rounded p-3 bg-c5">
   <div class="d-flex flex-sm-column justify-content-around">
-    <div class="mb-2 cursor-pointer">Card View</div>
-    <div class="mb-2 cursor-pointer">Table View</div>
+    <div
+      class:selected={view === "card"}
+      on:click={() => handleView("card")}
+      class="mb-2 cursor-pointer"
+    >
+      Card View
+    </div>
+    <div
+      class:selected={view === "table"}
+      on:click={() => handleView("table")}
+      class="mb-2 cursor-pointer"
+    >
+      Table View
+    </div>
   </div>
 
   <div>
@@ -35,5 +57,12 @@
 
   .bg-c5 {
     background-color: #c5cbd8;
+  }
+
+  .selected {
+    color: red;
+    background-color: aliceblue;
+    border: 1px solid aqua;
+    border-radius: 50px;
   }
 </style>
