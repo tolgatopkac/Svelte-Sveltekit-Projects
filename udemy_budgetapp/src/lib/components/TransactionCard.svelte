@@ -1,5 +1,6 @@
 <script>
   import { Card, CardBody } from "sveltestrap";
+  import { transactionStore } from "../../store";
 
   export let transaction;
   let border;
@@ -10,13 +11,20 @@
   } else {
     border = "border border-warning border-4";
   }
+
+  const handleDelete = (id) => {
+    $transactionStore = $transactionStore.filter(
+      (transaction) => transaction.id != id
+    );
+  };
 </script>
 
 <Card class={border}>
   <CardBody class="text-center">{transaction.name}</CardBody>
   <span class="money text-danger fw-bolder">{transaction.amount}</span>
   <span class="date text-danger fw-bolder">{transaction.date}</span>
-  <span class="delete-btn">X</span>
+  <span on:click={() => handleDelete(transaction.id)} class="delete-btn">X</span
+  >
 </Card>
 
 <style>
