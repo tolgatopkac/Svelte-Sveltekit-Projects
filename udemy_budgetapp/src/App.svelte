@@ -1,0 +1,21 @@
+<script>
+</script>
+
+<div class="p-1">
+  <!-- <Header/> -->
+  <div class="d-flex flex-column flex-sm-row">
+    <!-- Side -->
+    <div class="flex-grow-1 pt-3">
+      <!-- Transaction Header -->
+      <div>
+        <!-- Transaction Card List -->
+      </div>
+      <div>
+        <!-- Transaction Table List -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+</style>
