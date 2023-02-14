@@ -3,6 +3,7 @@
   import Sidebar from "./lib/components/Sidebar.svelte";
   import TransactionCardList from "./lib/components/TransactionCardList.svelte";
   import TransactionHeader from "./lib/components/TransactionHeader.svelte";
+  import TransactionTableList from "./lib/components/TransactionTableList.svelte";
 </script>
 
 <div class="p-1">
@@ -14,9 +15,9 @@
     <div class="flex-grow-1 pt-3">
       <!-- Transaction Header -->
       <TransactionHeader />
-      <div>
+      <div class="w-75 m-auto">
         <!-- Transaction Card List -->
-        <TransactionCardList />
+        <TransactionTableList />
       </div>
       <div>
         <!-- Transaction Table List -->
