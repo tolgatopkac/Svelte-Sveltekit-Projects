@@ -1,6 +1,23 @@
 <script>
-  import { transactionStore } from "../../store";
+  import {
+    transactionStore,
+    SelectedTypeStore,
+    IncomeStore,
+    ExpenseStore,
+    InvestmentStore,
+  } from "../../store";
+
   $: transactionList = $transactionStore;
+
+  $: if ($SelectedTypeStore === "all") {
+    transactionList = $transactionStore;
+  } else if ($SelectedTypeStore === "Income") {
+    transactionList = $IncomeStore;
+  } else if ($SelectedTypeStore === "Expense") {
+    transactionList = $ExpenseStore;
+  } else if ($SelectedTypeStore === "Investment") {
+    transactionList = $InvestmentStore;
+  }
 
   const handleDelete = (id) => {
     $transactionStore = $transactionStore.filter(

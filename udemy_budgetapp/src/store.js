@@ -54,3 +54,28 @@ export const amountOfInvestment = derived(
       .filter((transaction) => transaction.type === "Investment")
       .reduce((a, item) => a + item.amount, 0)
 );
+
+export const IncomeStore = derived(
+  transactionStore,
+  // @ts-ignore
+  ($transactionStore) =>
+    $transactionStore.filter((transaction) => transaction.type === "Income")
+);
+
+export const ExpenseStore = derived(
+  transactionStore,
+  // @ts-ignore
+  ($transactionStore) =>
+    $transactionStore.filter((transaction) => transaction.type === "Expense")
+);
+
+export const InvestmentStore = derived(
+  transactionStore,
+  // @ts-ignore
+  ($transactionStore) =>
+    $transactionStore.filter((transaction) => transaction.type === "Investment")
+);
+
+const initialSelectedType = "all";
+
+export const SelectedTypeStore = persistStore("type", initialSelectedType);

@@ -1,9 +1,13 @@
 <script>
   import TransactionForm from "./TransactionForm.svelte";
-
   import { createEventDispatcher } from "svelte";
+  import { SelectedTypeStore } from "../../store";
 
   const dispatch = createEventDispatcher();
+
+  let selectedType = "all";
+
+  $: $SelectedTypeStore = selectedType;
 
   const handleView = (viewSelection) => {
     dispatch("handleViewSelect", viewSelection);
@@ -39,7 +43,7 @@
       />
     </div>
 
-    <select class="form-select mt-3">
+    <select bind:value={selectedType} class="form-select mt-3">
       <option value="all" selected>All</option>
       <option value="Income" selected>Incomes</option>
       <option value="Expense" selected>Expenses</option>
