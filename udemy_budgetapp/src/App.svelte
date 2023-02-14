@@ -1,8 +1,10 @@
 <script>
+  import Header from "./lib/components/Header.svelte";
 </script>
 
 <div class="p-1">
   <!-- <Header/> -->
+  <Header />
   <div class="d-flex flex-column flex-sm-row">
     <!-- Side -->
     <div class="flex-grow-1 pt-3">
