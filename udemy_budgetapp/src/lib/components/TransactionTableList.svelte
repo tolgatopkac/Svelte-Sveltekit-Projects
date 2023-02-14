@@ -1,5 +1,9 @@
 <script>
+  import { fly, fade, slide, scale } from "svelte/transition";
+  import { flip } from "svelte/animate";
+
   import {
+    SearchStore,
     transactionStore,
     SelectedTypeStore,
     IncomeStore,
@@ -19,6 +23,15 @@
     transactionList = $InvestmentStore;
   }
 
+  $: visibleTransactionLists = $SearchStore
+    ? transactionList.filter((transaction) => {
+        return (
+          transaction.name.match(`${$SearchStore.toLowerCase()}.*`) ||
+          transaction.date.match(`${$SearchStore.toLowerCase()}.*`)
+        );
+      })
+    : transactionList;
+
   const handleDelete = (id) => {
     $transactionStore = $transactionStore.filter(
       (transaction) => transaction.id != id
@@ -37,8 +50,12 @@
     </tr>
   </thead>
   <tbody>
-    {#each transactionList as transaction (transaction.id)}
-      <tr>
+    {#each visibleTransactionLists as transaction (transaction.id)}
+      <tr
+        in:fade
+        out:scale|local={{ duration: 1000 }}
+        animate:flip={{ duration: 1000 }}
+      >
         <td>{transaction.name}</td>
         <td>{transaction.amount}</td>
         <td>{transaction.type}</td>

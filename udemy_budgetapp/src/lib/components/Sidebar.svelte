@@ -1,8 +1,12 @@
 <script>
   import TransactionForm from "./TransactionForm.svelte";
   import { createEventDispatcher } from "svelte";
-  import { SelectedTypeStore } from "../../store";
+  import { SelectedTypeStore, SearchStore } from "../../store";
 
+  let search = "";
+  $: $SearchStore = search;
+
+  export let view;
   const dispatch = createEventDispatcher();
 
   let selectedType = "all";
@@ -12,8 +16,6 @@
   const handleView = (viewSelection) => {
     dispatch("handleViewSelect", viewSelection);
   };
-
-  export let view;
 </script>
 
 <div class="d-flex flex-column mt-3 rounded p-3 bg-c5">
@@ -40,6 +42,7 @@
         type="search"
         class="form-control"
         placeholder="Search for Transactions"
+        bind:value={search}
       />
     </div>
 

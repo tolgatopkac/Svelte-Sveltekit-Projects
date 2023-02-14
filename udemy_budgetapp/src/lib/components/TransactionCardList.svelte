@@ -6,7 +6,11 @@
     IncomeStore,
     ExpenseStore,
     InvestmentStore,
+    SearchStore,
   } from "../../store";
+
+  import { fly, fade, slide, scale } from "svelte/transition";
+  import { flip } from "svelte/animate";
 
   $: transactionList = $transactionStore;
 
@@ -19,11 +23,25 @@
   } else if ($SelectedTypeStore === "Investment") {
     transactionList = $InvestmentStore;
   }
+
+  $: visibleTransactionLists = $SearchStore
+    ? transactionList.filter((transaction) => {
+        return (
+          transaction.name.match(`${$SearchStore.toLowerCase()}.*`) ||
+          transaction.date.match(`${$SearchStore.toLowerCase()}.*`)
+        );
+      })
+    : transactionList;
 </script>
 
 <div class="d-flex flex-column flex-sm-row flex-wrap justify-content-around">
-  {#each transactionList as transaction (transaction.id)}
-    <div class="my-card">
+  {#each visibleTransactionLists as transaction (transaction.id)}
+    <div
+      in:fade
+      out:scale|local={{ duration: 1000 }}
+      animate:flip={{ duration: 1000 }}
+      class="my-card"
+    >
       <TransactionCard {transaction} />
     </div>
   {/each}
