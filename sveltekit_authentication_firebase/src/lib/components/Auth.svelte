@@ -1,5 +1,5 @@
 <script>
-	import { authHandlers } from '../stores/authStore';
+	import { authHandlers, authStore } from '../stores/authStore';
 
 	let register = true;
 
@@ -24,6 +24,10 @@
 			} catch (err) {
 				console.log(err);
 			}
+		}
+
+		if ($authStore.currentUser) {
+			window.location.href = '/dashboard';
 		}
 	}
 </script>
@@ -60,6 +64,7 @@
 		>
 			Don't have an account ? <p>Sign Up</p>
 		</button>
+		<button on:click={() => authHandlers.resetPassword(email)}> Forgot Password </button>
 	{/if}
 </div>
 
