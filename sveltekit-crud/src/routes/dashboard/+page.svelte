@@ -38,7 +38,7 @@
 
 	async function saveTodos() {
 		try {
-			const userRef = doc(db, 'user', $authStore.user.uid);
+			const userRef = doc(db, 'users', $authStore.user.uid);
 			await setDoc(userRef, { todos: todoList }, { merge: true });
 		} catch (err) {
 			console.log('There was an error saving your information', err);
