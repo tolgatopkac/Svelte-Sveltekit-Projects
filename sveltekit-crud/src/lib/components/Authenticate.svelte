@@ -24,6 +24,7 @@
 			<p class="error">The information you have entered is not correct</p>
 		{/if}
 		<label>
+			<!-- float -->
 			<p class={email ? 'above' : 'center'}>Email</p>
 			<input bind:value={email} type="email" placeholder="Email" />
 		</label>
