@@ -1,14 +1,32 @@
 <script>
+	import { authHandlers } from '../store/store';
+
 	let email = '';
 	let password = '';
 	let confirmPass = '';
 	let error = false;
 	let register = false;
+	let authenticating = false;
 
-	function handleAuthenticate() {
+	async function handleAuthenticate() {
+		if (authenticating) {
+			return;
+		}
+
 		if (!email || !password || (register && !confirmPass)) {
 			error = true;
 			return;
+		}
+		authenticating = true;
+		try {
+			if (!register) {
+				await authHandlers.login(email, password);
+			} else {
+				await authHandlers.signup(email, password);
+			}
+		} catch (err) {
+			console.log('There was an auth error', err);
+			error = true;
 		}
 	}
 
@@ -38,7 +56,23 @@
 				<input bind:value={confirmPass} type="password" placeholder="Confirm Password" />
 			</label>
 		{/if}
-		<button type="button">Submit</button>
+		<button on:click={handleAuthenticate} type="button" class="submitBtn">
+			{#if authenticating}
+				<svg
+					class="spin"
+					viewbox="0 0 32 32"
+					width="32"
+					height="32"
+					stroke="currentColor"
+					fill="currentColor"
+					><path
+						d="M19 3c0 1.7-1.3 3-3 3s-3-1.3-3-3 1.3-3 3-3 3 1.3 3 3z m0 26c0 1.7-1.3 3-3 3s-3-1.3-3-3 1.3-3 3-3 3 1.3 3 3zM0 16c0-1.7 1.3-3 3-3s3 1.3 3 3-1.3 3-3 3-3-1.3-3-3z m32 0c0 1.7-1.3 3-3 3s-3-1.3-3-3 1.3-3 3-3 3 1.3 3 3zM4.7 27.3c-1.2-1.2-1.2-3.1 0-4.2 1.2-1.2 3.1-1.2 4.2 0 1.2 1.2 1.2 3.1 0 4.2-1.2 1.2-3.1 1.2-4.2 0z m4.2-18.4c-1.2 1.2-3.1 1.2-4.2 0-1.2-1.2-1.2-3.1 0-4.2 1.2-1.2 3.1-1.2 4.2 0 1.2 1.2 1.2 3.1 0 4.2z m14.2 14.2c1.2-1.2 3.1-1.2 4.2 0 1.2 1.2 1.2 3.1 0 4.2-1.2 1.2-3.1 1.2-4.2 0-1.2-1.2-1.2-3.1 0-4.2z"
+					/></svg
+				>
+			{:else}
+				Submit
+			{/if}
+		</button>
 	</form>
 	<div class="options">
 		<p>Or</p>
@@ -112,6 +146,8 @@
 		border-radius: 5px;
 		cursor: pointer;
 		font-size: 1.2rem;
+		display: grid;
+		place-items: center;
 	}
 
 	form button:hover {
@@ -151,6 +187,7 @@
 	.error {
 		color: coral;
 		font-size: 0.9rem;
+		text-align: center;
 	}
 
 	.options {
@@ -198,5 +235,18 @@
 	.options div p:last-of-type {
 		color: cyan;
 		cursor: pointer;
+	}
+
+	.spin {
+		animation: spin 1s linear infinite;
+	}
+
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>

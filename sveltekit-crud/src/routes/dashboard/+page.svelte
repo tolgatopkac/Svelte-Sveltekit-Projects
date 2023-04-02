@@ -1,4 +1,6 @@
 <script>
+	import { authHandlers } from '../../lib/store/store';
+
 	let todoList = ['Finish the project'];
 	let currTodo = '';
 	let error = false;
@@ -41,7 +43,7 @@
 				>Save</button
 			>
 
-			<button
+			<button on:click={() => authHandlers.logout()}
 				><svg viewbox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="currentColor"
 					><path
 						d="M17 7l-1.4 1.4L18.2 11H8v2h10.2l-2.6 2.6L17 17l5-5zM4 5h8V3H4c-1.1 0-2 0.9-2 2v14c0 1.1 0.9 2 2 2h8v-2H4V5z"
