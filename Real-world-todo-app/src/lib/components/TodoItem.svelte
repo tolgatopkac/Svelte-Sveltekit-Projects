@@ -2,15 +2,11 @@
   import type { Task } from "../../model";
   import TodoItemActions from "./TodoItemActions.svelte";
 
-  let data: Task = {
-    id: "1",
-    title: "Buy some cookies",
-    completed: false,
-  };
+  export let data: Task;
 </script>
 
 <div>
-  <span>{data.title}</span>
+  <span contenteditable="true" bind:textContent={data.title} />
   <TodoItemActions on:delete />
 </div>
 
